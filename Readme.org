@@ -52,9 +52,9 @@ See [[https://github.com/ahendriksen/ob-tmux][ob-tmux]] for an alternative. Summ
 - =ob-tmux= launches an external terminal (e.g. =xterm=) with a
   new tmux session.
 - =emamux= (and hence =ob-emamux=) interacts with existing tmux
-  sessions. Remote sessions are handled through TRAMP.
+  sessions.
 - =ob-tmux= manages its own sessions, and prefixes its session names
   with =org-babel-=. Interacting with existing sessions is possible
   but not straightforward, and requires specifying a socket file to connect.
   Remote sessions also require separately forwarding an SSH tunnel.
-
+- =emamux= handles remote sessions through TRAMP.
