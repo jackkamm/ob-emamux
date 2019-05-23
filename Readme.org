@@ -1,9 +1,10 @@
 #+TITLE: ob-emamux
 
 [[https://orgmode.org/worg/org-contrib/babel/intro.html][Org-babel]] support for tmux via [[https://github.com/syohex/emacs-emamux][emamux]].
-
-Send commands to external tmux sessions through org-babel source
-blocks. Integrated with TRAMP. Doesn't require forwarding sockets.
+- Send commands to external tmux sessions through org-babel source
+  blocks.
+- Integrated with TRAMP.
+- Doesn't require forwarding sockets.
 
 * Installation
 
