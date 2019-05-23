@@ -21,17 +21,6 @@ to =org-babel-load-languages=:
      (emamux . t)))
 #+end_src
 
-** Tmux 2.0+ configuration
-
-To work with tmux versions 2.0+, set =emamux:show-buffers-with-index=
-and =emamux:get-buffers-regexp= as follows:
-
-#+begin_src emacs-lisp
-  (setq emamux:show-buffers-with-index nil)
-  (setq emamux:get-buffers-regexp
-        "^\\(buffer[0-9]+\\): +\\([0-9]+\\) +\\(bytes\\): +[\"]\\(.*\\)[\"]")
-#+end_src
-
 * Usage
 
 An =ob-emamux= source block looks like this:
@@ -45,6 +34,18 @@ An =ob-emamux= source block looks like this:
 The =:session= parameter is specified as =session:window.pane=.
 If not set to a specific value, it will use the default emamux target,
 or prompt for one if it isn't set.
+
+* Configuring =emamux= with =tmux= 2.0+
+
+While this does not directly affect =ob-emamux=, some
+=emamux= functions (e.g. =emamux:yank-from-list-buffers=)
+require the following configuration to work with =tmux= versions 2.0+.
+
+#+begin_src emacs-lisp
+  (setq emamux:show-buffers-with-index nil)
+  (setq emamux:get-buffers-regexp
+        "^\\(buffer[0-9]+\\): +\\([0-9]+\\) +\\(bytes\\): +[\"]\\(.*\\)[\"]")
+#+end_src
 
 * Alternatives
 
