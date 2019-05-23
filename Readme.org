@@ -1,0 +1,60 @@
+#+TITLE: ob-emamux
+
+[[https://orgmode.org/worg/org-contrib/babel/intro.html][Org-babel]] support for tmux via [[https://github.com/syohex/emacs-emamux][emamux]].
+
+Send commands to external tmux sessions through org-babel source
+blocks. Integrated with TRAMP. Doesn't require forwarding sockets.
+
+* Installation
+
+Add [[file:ob-emamux.el]] to your load-path, then load it and add =emamux=
+to =org-babel-load-languages=:
+
+#+begin_src emacs-lisp
+  (require 'ob-emamux)
+
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((emacs-lisp . t)
+     (shell . t)
+     (python . t)
+     (emamux . t)))
+#+end_src
+
+** Tmux 2.0+ configuration
+
+To work with tmux versions 2.0+, set =emamux:show-buffers-with-index=
+and =emamux:get-buffers-regexp= as follows:
+
+#+begin_src emacs-lisp
+  (setq emamux:show-buffers-with-index nil)
+  (setq emamux:get-buffers-regexp
+        "^\\(buffer[0-9]+\\): +\\([0-9]+\\) +\\(bytes\\): +[\"]\\(.*\\)[\"]")
+#+end_src
+
+* Usage
+
+An =ob-emamux= source block looks like this:
+
+#+begin_example
+#+begin_src emamux :session 0:0.0
+    echo hello world
+#+end_src emamux
+#+end_example
+
+The =:session= parameter is specified as =session:window.pane=.
+If not set to a specific value, it will use the default emamux target,
+or prompt for one if this isn't set.
+
+* Alternatives
+
+See [[https://github.com/ahendriksen/ob-tmux][ob-tmux]] for an alternative. Summary of the main differences:
+- =emamux= (and hence =ob-emamux=) easily interacts with existing tmux
+  sessions. Remote sessions are handled through TRAMP.
+- =ob-tmux= launches an external terminal (e.g. =xterm=) with a new
+  tmux session. =ob-tmux= launches its own sessions, and prefixes its
+  session names with =org-babel-=. Interacting with existing sessions
+  is possible but not straightforward, and requires specifying a
+  socket file to connect.  Remote sessions also require separately
+  forwarding an SSH tunnel.
+
