@@ -1,11 +1,11 @@
-;;; ob-emamux.el --- Tmux blocks for org-babel -*- lexical-binding: t -*-
+;;; ob-emamux.el --- org-babel tmux support via emamux -*- lexical-binding: t -*-
 
 ;; Author: Jack Kamm
 ;; Maintainer: Jack Kamm
 ;; Version: 0.1.0
-;; Package-Requires: (emamux)
-;; Homepage: TODO
-;; Keywords: TODO
+;; Package-Requires: ((emacs "24.3") (emamux "0.14"))
+;; Homepage: https://github.com/jackkamm/ob-emamux/
+;; Keywords: comm, literate programming, tmux
 
 
 ;; This file is not part of GNU Emacs
@@ -26,7 +26,25 @@
 
 ;;; Commentary:
 
-;; TODO
+;; Org-babel support for tmux via emamux.
+
+;; Sends commands to external tmux sessions through org-babel source
+;; blocks.  Integrated with TRAMP.  Doesn't require forwarding sockets.
+
+;; An ob-emamux source block looks like this:
+
+;; +#BEGIN_SRC emamux :session 0:0.0
+;;      echo hello world
+;; #+END_SRC
+
+;; The :session parameter is specified as "session:window.pane".  If not
+;; set to a specific session, it will use the default emamux target,
+;; or prompt for one if this isn't set.
+
+;; To configure emamux for tmux 2.0+, set
+;; emamux:show-buffers-with-index to nil
+;; and emamux:get-buffers-regexp to
+;; "^\\(buffer[0-9]+\\): +\\([0-9]+\\) +\\(bytes\\): +[\"]\\(.*\\)[\"]"
 
 ;;; Code:
 
@@ -40,13 +58,15 @@
 (add-to-list 'org-src-lang-modes '("emamux" . sh))
 
 (defun org-babel-execute:emamux (body params)
-  "TODO"
+  "Execute a block of shell code with emamux and Babel.
+This function is called by `org-babel-execute-src-block'.
+BODY is the body of the source block and PARAMS is an alist
+of the header properties."
   (let ((target (or (cdr (assq :session params))
                     (progn (when (not (emamux:set-parameters-p))
                              (emamux:set-parameters))
                            (emamux:target-session)))))
-    (when (equal target "none")
-      (error "Need a session to run"))
+    (when (equal target "none") (error "Need a session to run"))
     (emamux:reset-prompt target)
     (emamux:send-keys body target)))
 
