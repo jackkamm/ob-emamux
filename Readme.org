@@ -44,7 +44,7 @@ An =ob-emamux= source block looks like this:
 
 The =:session= parameter is specified as =session:window.pane=.
 If not set to a specific value, it will use the default emamux target,
-or prompt for one if this isn't set.
+or prompt for one if it isn't set.
 
 * Alternatives
 
