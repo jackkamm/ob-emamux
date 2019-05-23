@@ -36,11 +36,11 @@ and =emamux:get-buffers-regexp= as follows:
 
 An =ob-emamux= source block looks like this:
 
-#+begin_example
-#+begin_src emamux :session 0:0.0
+#+begin_src org
+,#+begin_src emamux :session 0:0.0
     echo hello world
-#+end_src emamux
-#+end_example
+,#+end_src
+#+end_src
 
 The =:session= parameter is specified as =session:window.pane=.
 If not set to a specific value, it will use the default emamux target,
