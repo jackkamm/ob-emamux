@@ -49,12 +49,13 @@ or prompt for one if it isn't set.
 * Alternatives
 
 See [[https://github.com/ahendriksen/ob-tmux][ob-tmux]] for an alternative. Summary of the main differences:
-- =ob-tmux= launches an external terminal (e.g. =xterm=) with a
-  new tmux session.
-- =emamux= (and hence =ob-emamux=) interacts with existing tmux
-  sessions.
-- =ob-tmux= manages its own sessions, and prefixes its session names
-  with =org-babel-=. Interacting with existing sessions is possible
-  but not straightforward, and requires specifying a socket file to connect.
-  Remote sessions also require separately forwarding an SSH tunnel.
-- =emamux= handles remote sessions through TRAMP.
+- =ob-tmux=
+  - Launches an external terminal (e.g. =xterm=) with a
+    new tmux session.
+  - Manages its own sessions, and prefixes their tmux session names
+    with =org-babel-=. Interacting with existing sessions requires a
+    socket file to connect.  Remote sessions also require forwarding
+    an SSH tunnel.
+- =ob-emamux=
+  - Aimed at interacting with existing tmux sessions.
+  - Handles remote sessions through TRAMP.
